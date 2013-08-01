@@ -9,7 +9,7 @@ From time to time I write a "one off" application, where I don't want to use a r
     
 In short, the "DataStore" is all that this code provides. It lets you do exactly what those four lines of code show:
 
-1. Specify a file to use for the DataStore. (Currently that file must already exist.)
+1. Specify a file to use for the DataStore.
 1. Get all items.
 1. Add an item to the datastore.
 1. Remove an item from the datastore.
