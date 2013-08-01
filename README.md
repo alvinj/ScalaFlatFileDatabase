@@ -36,3 +36,7 @@ so that method could be used like this:
 
     val Array(month, revenue, expenses, profit) = dataStore.fields(currentRow)
 
+## More information
+
+Written by Alvin Alexander.  
+http://alvinalexander.com
