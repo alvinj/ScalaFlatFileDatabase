@@ -17,13 +17,13 @@ lines of code show:
 1. Add an item to the datastore.
 1. Remove an item from the datastore.
 
-# How it works
+## How it works
 
 The items are stored as lines in a text file, i.e., a "flat file". The datastore doesn't care what 
 those lines are. My assumption is that they are lines of text that may be separated by a pipe delimiter, 
 comma, or nothing at all.
 
-# Future stuff
+## Future stuff
 
 I may add the ability to specify a field delimiter so the DataStore can return "fields" from each record.
 I may add that capability, but I don't need it now, and the implementation in Scala would also be very simple, 
