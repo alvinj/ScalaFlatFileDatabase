@@ -1,11 +1,8 @@
 package com.alvinalexander.flatfiledatabase
 
-import scala.collection.mutable.ListBuffer
 import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
-import java.io.File
-import java.io.BufferedWriter
-import java.io.FileWriter
+import java.io.{File, BufferedWriter, FileWriter}
 
 class DataStore(val dataFile: String) {
 
