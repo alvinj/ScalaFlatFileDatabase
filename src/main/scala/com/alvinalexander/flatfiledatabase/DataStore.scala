@@ -37,10 +37,10 @@ class DataStore(val dataFile: String) {
 
   // TODO move this to a FileUtils class
   private def getLinesFromFile(file: String): List[String] = {
-    val bufferedSource = Source.fromFile(dataFile)
-    val records = for (line <- bufferedSource.getLines) yield line
+    val bufferedSource = Source.fromFile(file)
+    val records = (for (line <- bufferedSource.getLines) yield line).toList
     bufferedSource.close
-    records.toList
+    records
   }
 
 }
