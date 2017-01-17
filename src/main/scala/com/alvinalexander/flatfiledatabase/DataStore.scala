@@ -23,14 +23,12 @@ class DataStore(val dataFile: String, val delimiter: String = "|") {
     // initialize `items` at startup
     getAllItems()
 
-    //TODO return an Option?
+    //TODO better to return an Option?
     def getAllItems(): List[String] = {
         if ((new File(dataFile).exists())) {
             val linesFromFile = getLinesFromFile(dataFile)
-            //println("getAllItems: linesFromFile size: " + linesFromFile.size)
             items.clear
             items.appendAll(linesFromFile)
-            //println("getAllItems: items size: " + items.size)
             items.toList
         } else {
             Nil
@@ -43,7 +41,7 @@ class DataStore(val dataFile: String, val delimiter: String = "|") {
      * `|` character.
      */
     def getAllItemsSeparatedIntoColumns(): Seq[Array[String]] = {
-        // can't use a plain "|" with `split`
+        // note: can't use a plain "|" with `split`
         val fieldSeparator = if (delimiter == "|") "\\|" else delimiter 
         val allItems = getAllItems
         val itemsPipeSeparated = for {
