@@ -5,10 +5,11 @@ From time to time I write a "one off" application, where I don't want to use a r
 I just want to store some text data in one or more flat files. For instance, in my current 
 "Stock Browser" application, I wanted to write code like this:
 
-    val stocksDb = new DataStore(stocksDataFile)
-    val stocks = stocksDb.getAllItems()
-    stocksDb.addItem(symbol)
-    stocksDb.removeItem(symbol)
+    val stocksDataFile = "/Users/Al/stocks.dat"
+    val stocksDataStore = new DataStore(stocksDataFile)
+    val stocks = stocksDataStore.getAllItems()
+    stocksDataStore.add(symbol)
+    stocksDataStore.remove(symbol)
     
 In short, the "DataStore" is all that this code provides. It lets you do exactly what those four 
 lines of code show:
@@ -22,7 +23,7 @@ lines of code show:
 Usage
 -----
 
-To see examples of how the code works, see the [src/main/scala/test.scala](test.scala) file.
+To see examples of how the code works, see the *Test.scala* file.
 
 
 What happens behind the scenes
@@ -38,7 +39,7 @@ Future stuff
 
 I added the ability to specify a field delimiter in the `DataStore` constructor, but that
 functionality hasn’t been tested. I have tested a default `|` delimiter a little, and it
-seems to be working. See the [src/main/scala/test.scala](test.scala) file for an example
+seems to be working. See the *Test.scala* file for an example
 of how I retrieve rows as columns.
 
 
