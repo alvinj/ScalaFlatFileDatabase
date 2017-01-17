@@ -2,7 +2,7 @@ A Scala Flat File Database
 ==========================
 
 From time to time I write little “one off” applications where I don't want to use a real database, 
-I just want to store a little text data in one or more flat files. For instance, in my current 
+I just want to store some plain text data in one or more flat files. For instance, in my current 
 “Stock Browser” application I wanted to write code like this:
 
     val stocksDataFile = "/Users/Al/stocks.dat"
