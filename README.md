@@ -1,4 +1,5 @@
-# A Scala Flat File Database
+A Scala Flat File Database
+==========================
 
 From time to time I write a "one off" application, where I don't want to use a real database, 
 I just want to store some text data in one or more flat files. For instance, in my current 
@@ -17,26 +18,37 @@ lines of code show:
 1. Add an item to the datastore.
 1. Remove an item from the datastore.
 
-## How it works
 
-The items are stored as lines in a text file, i.e., a "flat file". The datastore doesn't care what 
-those lines are. My assumption is that they are lines of text that may be separated by a pipe delimiter, 
-comma, or nothing at all.
+Usage
+-----
 
-## Future stuff
+To see examples of how the code works, see the [src/main/scala/test.scala](test.scala) file.
 
-I may add the ability to specify a field delimiter so the DataStore can return "fields" from each record.
-I may add that capability, but I don't need it now, and the implementation in Scala would also be very simple, 
-something like this:
 
-    var fieldSeparator = "|"
-    def fields(row: String) = row.split(fieldSeparator).map(_.trim)
+What happens behind the scenes
+------------------------------
 
-so that method could be used like this:
+The items you add are assumed to be plain text, and they’re stored as lines in a text file, i.e., a “flat file.” 
+The datastore doesn’t care what those lines are. I generally store pipe-delimited strings in the file, but you
+can store any sort of strings you want.
 
-    val Array(month, revenue, expenses, profit) = dataStore.fields(currentRow)
 
-## More information
+Future stuff
+------------
+
+I added the ability to specify a field delimiter in the `DataStore` constructor, but that
+functionality hasn’t been tested. I have tested a default `|` delimiter a little, and it
+seems to be working. See the [src/main/scala/test.scala](test.scala) file for an example
+of how I retrieve rows as columns.
+
+
+
+More information
+----------------
 
 Written by Alvin Alexander.  
 http://alvinalexander.com
+
+
+
+
