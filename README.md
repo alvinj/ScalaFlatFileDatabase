@@ -8,6 +8,8 @@ I just want to store some text data in one or more flat files. For instance, in 
     val stocksDataFile = "/Users/Al/stocks.dat"
     val stocksDataStore = new DataStore(stocksDataFile)
     val stocks = stocksDataStore.getAllItems()
+    
+    // later ...
     stocksDataStore.add(symbol)
     stocksDataStore.remove(symbol)
     
