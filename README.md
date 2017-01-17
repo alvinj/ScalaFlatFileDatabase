@@ -13,10 +13,10 @@ I just want to store some plain text data in one or more flat files. For instanc
     stocksDataStore.add(symbol)
     stocksDataStore.remove(symbol)
     
-In short, the “DataStore” is all that this code provides. It lets you do exactly what those four 
+In short, the “DataStore” is all that this code provides. It lets you do exactly what those
 lines of code show:
 
-1. Specify a file to use for the DataStore.
+1. Specify the name of a file to use for the DataStore.
 1. Get all items from the DataStore.
 1. Add an item to the DataStore.
 1. Remove an item from the DataStore.
@@ -26,6 +26,15 @@ Usage
 -----
 
 To see up-to-date examples of how the code works, see the *Test.scala* file.
+
+Note: One thing that isn’t demonstrated in *Test.scala* is that you can have multiple
+data stores in a single application. Just provide different file and variable names 
+for each store, like this:
+
+````
+val stocksDataStore = new DataStore("stocks.dat")
+val usersDataStore = new DataStore("users.dat")
+````
 
 
 What happens behind the scenes
