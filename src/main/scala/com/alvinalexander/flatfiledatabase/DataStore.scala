@@ -5,11 +5,15 @@ import scala.collection.mutable.ArrayBuffer
 import java.io.{ File, BufferedWriter, FileWriter }
 
 /**
- * I assume the user wants to store strings in a flat-file database
- * (where I use the word "database" very loosely.)
+ * This class lets you store strings in a flat-file database,
+ * where I use the word "database" very loosely.
  * 
- * If you store things as pipe-delimited records, you can use
- * record.split("|") to get the fields back.
+ * If you store your strings as pipe-delimited records, you can get
+ * your records back using either `getAllItems` or `getAllItemsSeparatedIntoColumns`.
+ * 
+ * `add` and `remove` methods are provided. There is no `edit` or
+ * `update` method because an “update” is just a `remove` followed
+ * by an `add`.
  * 
  */
 class DataStore(val dataFile: String, val delimiter: String = "|") {
@@ -38,7 +42,7 @@ class DataStore(val dataFile: String, val delimiter: String = "|") {
      * by the column/field delimiter. the default delimiter is a 
      * `|` character.
      */
-    def getAllRowsSeparatedIntoColumns(): Seq[Array[String]] = {
+    def getAllItemsSeparatedIntoColumns(): Seq[Array[String]] = {
         // can't use a plain "|" with `split`
         val fieldSeparator = if (delimiter == "|") "\\|" else delimiter 
         val allItems = getAllItems
