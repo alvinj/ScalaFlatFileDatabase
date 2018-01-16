@@ -28,6 +28,10 @@ class Database {
         s"${n.getNote.trim}|${n.getUrl.trim}|${n.getTags.trim}|${n.getDatetime}"
     }
 
+    private def createNoteFromDatabaseRec(note: String, url: String, tags: String, date: String): Note = {
+        new Note(note, url, tags, date)
+    }
+
     def getAll(): Seq[Note] = {
         val records: Seq[Seq[String]] = dataStore.getAllItemsSeparatedIntoColumns()
         val notes = for {
