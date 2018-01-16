@@ -30,7 +30,7 @@ object Test extends App {
     println("\nLET THE DATASTORE SPLIT THE PIPES INTO COLUMNS (Version 2)")
     // notice the use of Array here to access the columns
     val records = dataStore.getAllItemsSeparatedIntoColumns()
-    for (Array(name, url) <- records) {
+    for (Seq(name, url) <- records) {
         println(s"name: $name, url: $url")
     }
 

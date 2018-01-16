@@ -2,7 +2,9 @@ package com.alvinalexander.flatfiledatabase
 
 import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
-import java.io.{ File, BufferedWriter, FileWriter }
+import java.io.{BufferedWriter, File, FileWriter}
+
+import scala.collection.immutable
 
 /**
  * This class lets you store strings in a flat-file database,
@@ -19,34 +21,41 @@ import java.io.{ File, BufferedWriter, FileWriter }
 class DataStore(val dataFile: String, val delimiter: String = "|") {
 
     private val items = new ArrayBuffer[String]()
+    private val NEWLINE_SYMBOL = "«"
 
     // initialize `items` at startup
     getAllItems()
 
-    //TODO better to return an Option?
-    def getAllItems(): List[String] = {
+    /**
+      * if a record had newline characters when it was saved, those
+      * newlines characters will be in these lines as well.
+      */
+    def getAllItems(): Seq[String] = {
         if ((new File(dataFile).exists())) {
-            val linesFromFile = getLinesFromFile(dataFile)
+            val lines: Seq[String] = getLinesFromFileWithNewlineCharactersRestored(dataFile)
             items.clear
-            items.appendAll(linesFromFile)
-            items.toList
+            items.appendAll(lines)
+            items
         } else {
             Nil
         }
     }
-    
+
+    private def convertRareCharacterToNewline(s: String): String = s.replaceAll(NEWLINE_SYMBOL, "\n")
+    private def convertNewlineToRareCharacter(s: String): String = s.replaceAll("\n", NEWLINE_SYMBOL)
+
     /**
      * returns all of the items, with each row separated into columns
      * by the column/field delimiter. the default delimiter is a 
      * `|` character.
      */
-    def getAllItemsSeparatedIntoColumns(): Seq[Array[String]] = {
+    def getAllItemsSeparatedIntoColumns(): Seq[Seq[String]] = {
         // note: can't use a plain "|" with `split`
         val fieldSeparator = if (delimiter == "|") "\\|" else delimiter 
-        val allItems = getAllItems
-        val itemsPipeSeparated = for {
+        val allItems: Seq[String] = getAllItems
+        val itemsPipeSeparated: Seq[Seq[String]] = for {
             i <- allItems
-            fields = i.split(fieldSeparator).map(_.trim)
+            fields = i.split(fieldSeparator).map(_.trim).toSeq
         } yield fields
         itemsPipeSeparated
     }
@@ -64,19 +73,33 @@ class DataStore(val dataFile: String, val delimiter: String = "|") {
         saveItems()
     }
 
+    /**
+      * "\n" characters in each line are converted to "«". if i don't do
+      * something like that, this approach fails when any field has a newline
+      * character.
+      */
     private def saveItems() {
         val append = false
         val bw = new BufferedWriter(new FileWriter(new File(dataFile), append))
         //for (item <- items.sorted) bw.write(s"$item\n")
-        for (item <- items) bw.write(s"$item\n")
+        for (item <- items) {
+            val modifiedItem = convertNewlineToRareCharacter(item)
+            bw.write(s"$modifiedItem\n")
+        }
         bw.close()
     }
 
-    private def getLinesFromFile(file: String): List[String] = {
+    /*
+     * "«" is converted to "\n" in this method
+     */
+    private def getLinesFromFileWithNewlineCharactersRestored(file: String): Seq[String] = {
         val bufferedSource = Source.fromFile(file)
-        val records = (for (line <- bufferedSource.getLines) yield line).toList
+        val records: Iterator[String] = for {
+            line <- bufferedSource.getLines
+        } yield convertRareCharacterToNewline(line)
+        val recordsAsList = records.toList
         bufferedSource.close
-        records
+        recordsAsList
     }
 
 }
