@@ -16,6 +16,12 @@ import scala.collection.immutable
  * `add` and `remove` methods are provided. There is no `edit` or
  * `update` method because an “update” is just a `remove` followed
  * by an `add`.
+ *
+ * If there are newline characters in your string, they will stay as newline
+ * characters in the ArrayBuffer in this class. Those "\n" characters will
+ * be written to the file as a "«", but that’s only for the file representation;
+ * they will be kept as newline characters in the ArrayBuffer. This is important
+ * for the ‘delete’ process.
  * 
  */
 class DataStore(val dataFile: String, val delimiter: String = "|") {
@@ -66,12 +72,21 @@ class DataStore(val dataFile: String, val delimiter: String = "|") {
     }
 
     /**
-     * this must exactly match the item that was stored
+     * the given `item` must exactly match the item in our list.
+     * `-=` is used in this method, and it deletes ONLY the first matching
+     * element in the ArrayBuffer.
      */
     def remove(item: String) {
         items -= item
         saveItems()
     }
+
+//    //TODO need to update/fix this method
+//    def removeAll(item: String): Unit = {
+//        val newItems = items.filter(_ != item)
+//        items.clear
+//        items.appendAll(newItems)
+//    }
 
     /**
       * "\n" characters in each line are converted to "«". if i don't do
