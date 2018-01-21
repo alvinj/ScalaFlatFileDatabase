@@ -63,10 +63,9 @@ something like this so that every record is stored on exactly one line.)
 Field delimiters
 ----------------
 
-I added the ability to specify a field delimiter in the `DataStore` constructor, but that
-functionality hasn’t been tested. I have tested a default `|` delimiter a little, and it
-seems to be working. See the *Test.scala* file for an example
-of how I retrieve rows as columns.
+I added the ability to specify both a field delimiter and a newline replacement character
+in the `DataStore` constructor. Hopefully the default values I used will be okay for most
+situations (as they tend to be hard to type), but if not, you can change them as desired.
 
 
 Future/To-Do
@@ -91,12 +90,14 @@ val user = dataStore.getPojo("Alvin")  // some magic happens here
 I haven’t thought this out much, but I can see where something like
 that would be a nice feature.
 
+I’ve also thought about adding an automatically-generated `id` field to each row,
+but haven’t taken the time to think that through either.
 
 
 More information
 ----------------
 
-Written by Alvin Alexander.  
+Written by Alvin Alexander    
 http://alvinalexander.com
 
 
