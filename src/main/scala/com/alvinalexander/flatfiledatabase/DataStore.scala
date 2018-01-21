@@ -22,12 +22,23 @@ import scala.collection.immutable
  * be written to the file as a "«", but that’s only for the file representation;
  * they will be kept as newline characters in the ArrayBuffer. This is important
  * for the ‘delete’ process.
+ *
+ * Note that `delimiter` and `newlineSymbol` are defined as `String`; I should
+ * probably make them `Char`.
+ *
+ * @param dataFile The file the data is stored in.
+ * @param delimiter The string/character that is used to separate the fields in the data file.
+ * @param newlineSymbol The string/character that is used to replace `\n` characters when
+ *                      the data is saved to the file.
  * 
  */
-class DataStore(val dataFile: String, val delimiter: String = "|") {
+class DataStore(
+    val dataFile: String,
+    val delimiter: String = "|",
+    val newlineSymbol: String = "«"
+) {
 
     private val items = new ArrayBuffer[String]()
-    private val NEWLINE_SYMBOL = "«"
 
     // initialize `items` at startup
     getAllItems()
@@ -47,8 +58,8 @@ class DataStore(val dataFile: String, val delimiter: String = "|") {
         }
     }
 
-    private def convertRareCharacterToNewline(s: String): String = s.replaceAll(NEWLINE_SYMBOL, "\n")
-    private def convertNewlineToRareCharacter(s: String): String = s.replaceAll("\n", NEWLINE_SYMBOL)
+    private def convertRareCharacterToNewline(s: String): String = s.replaceAll(newlineSymbol, "\n")
+    private def convertNewlineToRareCharacter(s: String): String = s.replaceAll("\n", newlineSymbol)
 
     /**
      * returns all of the items, with each row separated into columns
