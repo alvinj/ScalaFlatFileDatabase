@@ -4,8 +4,6 @@ import scala.io.Source
 import scala.collection.mutable.ArrayBuffer
 import java.io.{BufferedWriter, File, FileWriter}
 
-import scala.collection.immutable
-
 /**
  * This class lets you store strings in a flat-file database,
  * where I use the word "database" very loosely.
@@ -77,7 +75,7 @@ class DataStore(
         itemsPipeSeparated
     }
 
-    def add(item: String) {
+    def add(item: String): Unit = {
         items += item
         saveItems()
     }
@@ -87,13 +85,21 @@ class DataStore(
      * `-=` is used in this method, and it deletes ONLY the first matching
      * element in the ArrayBuffer.
      */
-    def remove(item: String) {
+    def remove(item: String): Unit = {
         items -= item
         saveItems()
     }
 
-//    //TODO need to update/fix this method
-//    def removeAll(item: String): Unit = {
+    /**
+      * warning: this deletes *all* items from the database;
+      * proceed with caution.
+      */
+    def removeAll(): Unit = {
+        items.clear
+        saveItems()
+    }
+
+    //    def removeAll(item: String): Unit = {
 //        val newItems = items.filter(_ != item)
 //        items.clear
 //        items.appendAll(newItems)

@@ -2,7 +2,10 @@ package com.alvinalexander.flatfiledatabase
 
 object Test extends App {
 
-    val dataStore = new DataStore("/Users/Al/RssReader.data")
+    val dir = System.getProperty("user.dir")
+    val slash = System.getProperty("file.separator")
+    val testDir = s"${dir}${slash}testdata"
+    val dataStore = new DataStore(s"${testDir}${slash}Test.dat")
 
     // ADD RECORDS LIKE THIS
 //    dataStore.add("alvinalexander.com| http://alvinalexander.com/rss.xml")
@@ -10,7 +13,7 @@ object Test extends App {
 //    dataStore.add("Cubs Insider | http://www.cubsinsider.com/feed/")
     val scala = "Scala | http://www.scala-lang.org/feed/index.xml"
     dataStore.add(scala)
-    
+
     println("\nHANDLE THE PIPES YOURSELF")
     val items = dataStore.getAllItems()
     for (i <- items) {
